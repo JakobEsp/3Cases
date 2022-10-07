@@ -18,7 +18,7 @@ namespace Three_Cases
 
 
             login.GetOutput();
-            
+            login.Login();
             login.GetProgram();  
         }
 
@@ -197,7 +197,6 @@ namespace Three_Cases
     }
     class Output
     {
-        RunLogin login = new RunLogin();
         public bool Debug { get; set; }
 
         public void KeyPress(out ConsoleKey tasts)

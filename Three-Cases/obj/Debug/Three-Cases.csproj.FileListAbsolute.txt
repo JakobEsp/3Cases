@@ -1,0 +1,8 @@
+C:\Users\jacesp\Desktop\Three Cases Opgave\Three-Cases\Three-Cases\bin\Debug\Three-Cases.exe.config
+C:\Users\jacesp\Desktop\Three Cases Opgave\Three-Cases\Three-Cases\bin\Debug\Three-Cases.exe
+C:\Users\jacesp\Desktop\Three Cases Opgave\Three-Cases\Three-Cases\bin\Debug\Three-Cases.pdb
+C:\Users\jacesp\Desktop\Three Cases Opgave\Three-Cases\Three-Cases\obj\Debug\Three-Cases.csproj.AssemblyReference.cache
+C:\Users\jacesp\Desktop\Three Cases Opgave\Three-Cases\Three-Cases\obj\Debug\Three-Cases.csproj.SuggestedBindingRedirects.cache
+C:\Users\jacesp\Desktop\Three Cases Opgave\Three-Cases\Three-Cases\obj\Debug\Three-Cases.csproj.CoreCompileInputs.cache
+C:\Users\jacesp\Desktop\Three Cases Opgave\Three-Cases\Three-Cases\obj\Debug\Three-Cases.exe
+C:\Users\jacesp\Desktop\Three Cases Opgave\Three-Cases\Three-Cases\obj\Debug\Three-Cases.pdb

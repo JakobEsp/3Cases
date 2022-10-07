@@ -27,6 +27,7 @@ namespace Three_Cases
     public class RunLogin
     {
         public bool debug;
+        string file, path;
         Output output = new Output();
         FileHandlers fileHandlers = new FileHandlers();
         ConsoleKey tast;
@@ -55,17 +56,39 @@ namespace Three_Cases
         }
         public void Login()
         {
-
-            output.Printline(debug, "Login[L] Opret[O]");
-            output.KeyPress(out tast);
-            if(tast == ConsoleKey.L)
+            bool valid = false;
+            string name, pw;
+            do
             {
+                output.Printline(debug, "Login[L] Opret[O]");
+                output.KeyPress(out tast);
+                if (tast == ConsoleKey.L)
+                {
+                    output.Printline(debug, "Indtast navn:");
+                    name = Console.ReadLine();
+                    output.Printline(debug, "Indtast kodeord:");
+                    pw = Console.ReadLine();
+                    string[] lines = File.ReadAllLines(file);
+                    // lines[0] - indeholder første linje i filen
+                    for (int i = 0; i < lines.Length; i++)
+                    {
+                        if (lines[i].Contains(name + pw))
+                        {
+                            valid = true;
+                        }
+                    }
+                }
+                else if (tast == ConsoleKey.O)
+                {
+                    fileHandlers.Create(debug, file, out file, out path);
+                    output.Printline(debug, "Indtast navn:");
+                    name = Console.ReadLine();
+                    output.Printline(debug, "Indtast kodeord:");
+                    pw = Console.ReadLine();
+                    fileHandlers.WriteText(debug, path, (name + pw));
+                }
+            } while (!valid);
 
-            }
-            else if (tast == ConsoleKey.O)
-            {
-                fileHandlers.Create(debug, "")
-            }
         }
         public void GetProgram()
         {
@@ -99,8 +122,9 @@ namespace Three_Cases
     class FileHandlers
     {
         // A function to create a file
-        public void Create(bool Debug, string file, out string path)
+        public void Create(bool Debug, string file, out string filename, out string path)
         {
+            
             // Create a new instance of 'OutPut'
             Output output = new Output();
             // Check if the filename is nothing
@@ -132,7 +156,8 @@ namespace Three_Cases
                 }
             }
             // Return the path of the file
-            path = Path.Combine(Directory.GetCurrentDirectory(), file); 
+            path = Path.Combine(Directory.GetCurrentDirectory(), file);
+            filename = file;
         }
 
         // Delete file function
@@ -164,7 +189,7 @@ namespace Three_Cases
             if (!File.Exists(file))
             {
                 // Use our create function
-                Create(Debug, file, out string tmp);
+                Create(Debug, file, out file, out string tmp);
             }
             // Write the text ot the file
             File.WriteAllText(file, input);

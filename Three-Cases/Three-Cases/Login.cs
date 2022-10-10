@@ -16,7 +16,6 @@ namespace Three_Cases
             Output output = new Output();
             
 
-
             login.GetOutput();
             login.Login();
             login.GetProgram();  
@@ -27,7 +26,7 @@ namespace Three_Cases
     public class RunLogin
     {
         public bool debug;
-        string file, path;
+        string file = "", path;
         Output output = new Output();
         FileHandlers fileHandlers = new FileHandlers();
         ConsoleKey tast;
@@ -68,6 +67,7 @@ namespace Three_Cases
                     name = Console.ReadLine();
                     output.Printline(debug, "Indtast kodeord:");
                     pw = Console.ReadLine();
+                    fileHandlers.GetStandartPath(file, out file);
                     string[] lines = File.ReadAllLines(file);
                     // lines[0] - indeholder første linje i filen
                     for (int i = 0; i < lines.Length; i++)
@@ -75,6 +75,7 @@ namespace Three_Cases
                         if (lines[i].Contains(name + pw))
                         {
                             valid = true;
+                            Console.Clear();
                         }
                     }
                 }
@@ -85,7 +86,15 @@ namespace Three_Cases
                     name = Console.ReadLine();
                     output.Printline(debug, "Indtast kodeord:");
                     pw = Console.ReadLine();
-                    fileHandlers.WriteText(debug, path, (name + pw));
+                    if (fileHandlers.CheckPassword(debug, pw))
+                    {
+                        fileHandlers.WriteText(debug, path, (name + pw));
+                    }
+                }
+                else if (tast == ConsoleKey.H)
+                {
+                    valid = true;
+                    Console.Clear();
                 }
             } while (!valid);
 
@@ -124,7 +133,7 @@ namespace Three_Cases
         // A function to create a file
         public void Create(bool Debug, string file, out string filename, out string path)
         {
-            
+
             // Create a new instance of 'OutPut'
             Output output = new Output();
             // Check if the filename is nothing
@@ -157,6 +166,15 @@ namespace Three_Cases
             }
             // Return the path of the file
             path = Path.Combine(Directory.GetCurrentDirectory(), file);
+            filename = file;
+        }
+        public void GetStandartPath(string file, out string filename)
+        {
+            if (file == "")
+            {
+                // Declare file name
+                file = "output.txt";
+            }
             filename = file;
         }
 
@@ -193,6 +211,51 @@ namespace Three_Cases
             }
             // Write the text ot the file
             File.WriteAllText(file, input);
+        }
+
+        public bool CheckPassword(bool debug, string pw)
+        {
+            Output output = new Output();
+            string specialCh = @"%!@#$%^&*()?/>.<,:;'\|}]{[_~`+=-" + "\"";
+            char[] specialChar = specialCh.ToCharArray();
+            int charNum = 0;
+
+            foreach (char ch in specialChar)
+            {
+                if (pw.Contains(specialChar[charNum]))
+                {
+                    if (pw.Length > 12)
+                    {
+                        if (!pw.Contains(" "))
+                        {
+                            if (pw.Any(char.IsUpper) && pw.Any(char.IsLower))
+                            {
+                                output.Printline(debug, "good");
+                                return true;
+                            }
+                            else
+                            {
+                                output.Printline(debug, "Use both upper and lower case letters");
+                            }
+                        }
+                        else
+                        {
+                            output.Printline(debug, "You Can't use spaces");
+                        }
+                    }
+                    else
+                    {
+                        output.Printline(debug, " password is too short");
+                    }
+                }
+                else
+                {
+                    charNum++;
+                }
+            }
+            output.Printline(debug, "Password failed\nYou need to use at least one special charecter");
+            return false;
+
         }
     }
     class Output

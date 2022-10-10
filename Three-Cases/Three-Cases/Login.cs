@@ -58,20 +58,26 @@ namespace Three_Cases
             bool valid = false;
             string name, pw;
             do
-            {
+            {   
                 output.Printline(debug, "Login[L] Opret[O]");
+                //gets user input.
                 output.KeyPress(out tast);
                 if (tast == ConsoleKey.L)
-                {
+                {   //asks for name and password
                     output.Printline(debug, "Indtast navn:");
                     name = Console.ReadLine();
                     output.Printline(debug, "Indtast kodeord:");
                     pw = Console.ReadLine();
-                    fileHandlers.GetStandartPath(file, out file);
+                    if(file == "")
+                    {   //if there isn't a path to a file it will get the default file route.
+                        fileHandlers.GetStandartPath(file, out file);
+                    }
+                    //gets all lines with username & passwords from file. 
                     string[] lines = File.ReadAllLines(file);
-                    // lines[0] - indeholder første linje i filen
+                    // goes trough lines in file 1 by 1.
                     for (int i = 0; i < lines.Length; i++)
                     {
+                        //checks lines for the name and password.
                         if (lines[i].Contains(name + pw))
                         {
                             valid = true;
@@ -81,6 +87,7 @@ namespace Three_Cases
                 }
                 else if (tast == ConsoleKey.O)
                 {
+
                     fileHandlers.Create(debug, file, out file, out path);
                     output.Printline(debug, "Indtast navn:");
                     name = Console.ReadLine();

@@ -19,33 +19,33 @@ namespace Three_Cases
                 {
                     op.Printline(debug, "Fejl!");
                 }
-                Console.Write("Name of first dancer: ");
+                op.Printline(debug,"Name of first dancer: ");
                 person1.Name = Console.ReadLine();
             } while (!vf.IsString(person1.Name));
 
             do
             {
-                Console.Write("Dancer Score: ");
+                op.Printline(debug, "Dancer Score: ");
             } while (!int.TryParse(Console.ReadLine(), out tmp));
             person1.Score = tmp;
 
             do
             {
-                Console.Write("Name of second dancer: ");
+                op.Printline(debug,"Name of second dancer: ");
                 person2.Name = Console.ReadLine();
             } while (!vf.IsString(person2.Name));
 
 
             do
             {
-                Console.Write("Dancer Score: ");
+                op.Printline(debug,"Dancer Score: ");
             } while (!int.TryParse(Console.ReadLine(), out tmp));
             person2.Score = tmp;
 
 
             Person samletPerson = person1 + person2;
             System.Diagnostics.Debug.WriteLine(samletPerson.Name + "\n" + samletPerson.Score);
-            Console.WriteLine(samletPerson.Name + "\n" + samletPerson.Score);
+            op.Printline(debug, samletPerson.Name + "\n" + samletPerson.Score);
             Console.ReadLine();
         }
     }

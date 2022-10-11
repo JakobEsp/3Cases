@@ -13,9 +13,8 @@ namespace Three_Cases
         public void MatchStart(bool debug)
         {
             output.Printline(debug, $"How many passes?");
-            //Tjekker om man skriver et tal ved at putte den indskrevne værdi ind i en int.
             if (!int.TryParse(Console.ReadLine(), out int passes))
-            {//Hvis den slår fejl ber den om at skrive numre og genstarter.
+            {
                 output.Printline(debug, $"Write it in numbers please!");
                 MatchStart(debug);
                 return;
@@ -38,14 +37,14 @@ namespace Three_Cases
             op.Printline(debug, $"Have your team Scored? [Yes] or [No]");
 
             goals = Console.ReadLine();
-            goals = goals.ToLower(); //gør goals til lower case bogstaver.
+            goals = goals.ToLower(); 
 
             switch (goals)
-            {//tjekker om der er skrevet det rigtige ind.
+            {
                 case "yes":
                 case "no":
                     return;
-                default://hvis der er skrevet noget forkert så ber den om at skrive det ordentligt, og starter det om.
+                default:
                     Console.Clear();
                     output.Printline(debug, $"pleasewrite Yes or No.");
                     HasScoredCheck(debug);
@@ -64,7 +63,7 @@ namespace Three_Cases
 
         }
         public string Result(string goals, int passes)
-        {//Finder ud af hvad der skal skrives. ud fra om der er skoret mål eller ik.
+        {
             if (goals.ToLower() == "yes")
             {
                 return CheerGoal(goals);
@@ -82,7 +81,7 @@ namespace Three_Cases
         }
 
         private string HappyWithPasses(int passes)
-        {//ud fra hvor mange afleveringer der har været printer den ud.
+        {
             if (passes <= 0)
             {
                 return (noPasses);

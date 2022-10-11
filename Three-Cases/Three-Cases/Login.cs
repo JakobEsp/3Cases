@@ -13,15 +13,12 @@ namespace Three_Cases
         static void Main(string[] args)
         {
             RunLogin login = new RunLogin();
-            Output output = new Output();
             
-
+            //Runs the methods used to login and setup the user.
             login.GetOutput();
             login.Login();
             login.GetProgram();  
         }
-
-        
     }
     public class RunLogin
     {
@@ -32,6 +29,7 @@ namespace Three_Cases
         ConsoleKey tast;
         public void GetOutput()
         {
+            //choose where system outup will be.
             Console.WriteLine("Standard[S] | Debug[D]");
             output.KeyPress(out tast);
             if (tast == ConsoleKey.S)
@@ -45,7 +43,8 @@ namespace Three_Cases
                 output.Printline(output.Debug, $"Debug = true");
             }
             else
-            {
+            {   
+                //tells you if you pressed wrong.
                 Console.WriteLine("you pressed wrong try again");
                 Console.ReadLine();
                 Console.Clear();
@@ -87,19 +86,22 @@ namespace Three_Cases
                 }
                 else if (tast == ConsoleKey.O)
                 {
-
+                    //Makes file where password and username is stored.
                     fileHandlers.Create(debug, file, out file, out path);
                     output.Printline(debug, "Indtast navn:");
                     name = Console.ReadLine();
                     output.Printline(debug, "Indtast kodeord:");
                     pw = Console.ReadLine();
-                    if (fileHandlers.CheckPassword(debug, pw))
+                    //checks if password passes.
+                    if (fileHandlers.CheckPassword(debug, pw, name))
                     {
+                        //puts username and password into file.
                         fileHandlers.WriteText(debug, path, (name + pw));
                     }
                 }
                 else if (tast == ConsoleKey.H)
                 {
+                    //shortcut.
                     valid = true;
                     Console.Clear();
                 }
@@ -115,6 +117,7 @@ namespace Three_Cases
             output.Printline(debug, $"Football[F] Dance[D]");
             
             output.KeyPress(out tasts);
+            //Get's program from Key
             if (tasts == ConsoleKey.F)
             {
                 Console.Clear();
@@ -219,26 +222,35 @@ namespace Three_Cases
             File.WriteAllText(file, input);
         }
 
-        public bool CheckPassword(bool debug, string pw)
+        public bool CheckPassword(bool debug, string pw, string un)
         {
             Output output = new Output();
             string specialCh = @"%!@#$%^&*()?/>.<,:;'\|}]{[_~`+=-""";
             char[] specialChar = specialCh.ToCharArray();
             int charNum = 0;
 
+            // checks for Special characters.
             foreach (char ch in specialChar)
             {
-                if (pw.Contains(specialChar[charNum]))
-                {
+                if (pw.Contains(specialChar[charNum]))  
+                {      
+                    //checks Length.
                     if (pw.Length > 12)
-                    {
+                    {   //checks for blank spaces.
                         if (!pw.Contains(" "))
-                        {
+                        {   //Checls for both upper and lower case letters.
                             if (pw.Any(char.IsUpper) && pw.Any(char.IsLower))
-                            {
-                                if (!char.IsLetter(pw[0]) && !char.IsLetter(pw[pw.Length - 1]))
-                                {
-                                    return true;
+                            {   //checks first and last character in password for letters.
+                                if (char.IsLetter(pw[0]) && char.IsLetter(pw[pw.Length - 1]))
+                                {   //makes sure password isn't the same as username.
+                                    if(pw.ToLower() != un.ToLower())
+                                    {
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        output.Printline(debug, "username and password cant be the same");
+                                    }
                                 }
                                 else
                                 {
@@ -259,6 +271,7 @@ namespace Three_Cases
                     {
                         output.Printline(debug, "password is too short");
                     }
+                    return false;
                 }
                 else
                 {
@@ -275,10 +288,11 @@ namespace Three_Cases
     {
         public bool Debug { get; set; }
 
+        //funktion outs key.
         public void KeyPress(out ConsoleKey tasts)
-        {
+        {   
+            //gets key.
             tasts = Console.ReadKey().Key;
-            System.Diagnostics.Debug.WriteLine("Tastet");
         }
 
         

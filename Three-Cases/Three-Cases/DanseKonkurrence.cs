@@ -1,22 +1,47 @@
 ﻿using System;
+using System.Linq;
 
 namespace Three_Cases
 {
     internal class DanseKonkurrence
     {
         
-        public void GetInputs()
+        public void GetInputs(bool debug)
         {
+            int tmp;
             Person person1 = new Person("", 0);
+            Verify vf = new Verify();
+            Output op = new Output();
             Person person2 = new Person("", 0);
-            Console.Write("Name of first dancer: ");
-            person1.Name = Console.ReadLine();
-            Console.Write("Dancer Score: ");
-            person1.Score = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Name of second dancer: ");
-            person2.Name = Console.ReadLine();
-            Console.Write("Dancer Score: ");
-            person2.Score = Convert.ToInt32(Console.ReadLine());
+            do
+            {
+                if (!vf.IsString(person1.Name))
+                {
+                    op.Printline(debug, "Fejl!");
+                }
+                Console.Write("Name of first dancer: ");
+                person1.Name = Console.ReadLine();
+            } while (!vf.IsString(person1.Name));
+
+            do
+            {
+                Console.Write("Dancer Score: ");
+            } while (!int.TryParse(Console.ReadLine(), out tmp));
+            person1.Score = tmp;
+
+            do
+            {
+                Console.Write("Name of second dancer: ");
+                person2.Name = Console.ReadLine();
+            } while (!vf.IsString(person2.Name));
+
+
+            do
+            {
+                Console.Write("Dancer Score: ");
+            } while (!int.TryParse(Console.ReadLine(), out tmp));
+            person2.Score = tmp;
+
 
             Person samletPerson = person1 + person2;
             System.Diagnostics.Debug.WriteLine(samletPerson.Name + "\n" + samletPerson.Score);
@@ -38,6 +63,27 @@ namespace Three_Cases
         {
             Person person = new Person ($"{a.Name} & {b.Name}", a.Score + b.Score);
             return person;
+        }
+    }
+
+    class Verify
+    {
+        public bool IsInt(string input, int number)
+        {
+            if (int.TryParse(input, out number))
+            {
+                return true;
+            }
+            return false;
+        }
+        public bool IsString(string input)
+        {
+            if (input.All(char.IsLetter))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

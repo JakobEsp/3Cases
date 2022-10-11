@@ -77,7 +77,7 @@ namespace Three_Cases
                     // goes trough lines in file 1 by 1.
                     for (int i = 0; i < lines.Length; i++)
                     {
-                        //checks lines for the name and password.
+                        //check lines for the name and password.
                         if (lines[i].Contains(name + pw))
                         {
                             valid = true;
@@ -104,7 +104,6 @@ namespace Three_Cases
                     Console.Clear();
                 }
             } while (!valid);
-
         }
         public void GetProgram()
         {
@@ -124,7 +123,7 @@ namespace Three_Cases
             else if (tasts == ConsoleKey.D)
             {
                 Console.Clear();
-                danseKonkurrence.GetInputs();
+                danseKonkurrence.GetInputs(debug);
             }
             else
             {
@@ -223,7 +222,7 @@ namespace Three_Cases
         public bool CheckPassword(bool debug, string pw)
         {
             Output output = new Output();
-            string specialCh = @"%!@#$%^&*()?/>.<,:;'\|}]{[_~`+=-" + "\"";
+            string specialCh = @"%!@#$%^&*()?/>.<,:;'\|}]{[_~`+=-""";
             char[] specialChar = specialCh.ToCharArray();
             int charNum = 0;
 
@@ -237,8 +236,14 @@ namespace Three_Cases
                         {
                             if (pw.Any(char.IsUpper) && pw.Any(char.IsLower))
                             {
-                                output.Printline(debug, "good");
-                                return true;
+                                if (!char.IsLetter(pw[0]) && !char.IsLetter(pw[pw.Length - 1]))
+                                {
+                                    return true;
+                                }
+                                else
+                                {
+                                    output.Printline(debug, "you can't have a number at the front or end");
+                                }
                             }
                             else
                             {
@@ -252,13 +257,14 @@ namespace Three_Cases
                     }
                     else
                     {
-                        output.Printline(debug, " password is too short");
+                        output.Printline(debug, "password is too short");
                     }
                 }
                 else
                 {
                     charNum++;
                 }
+
             }
             output.Printline(debug, "Password failed\nYou need to use at least one special charecter");
             return false;

@@ -10,9 +10,12 @@ namespace Three_Cases
     {
         string goals = string.Empty;
         Output output = new Output();
+        RunLogin login = new RunLogin();
+        ConsoleKey tast;
         public void MatchStart(bool debug)
         {
             output.Printline(debug, $"How many passes?");
+            //catches input if it isnt an int
             if (!int.TryParse(Console.ReadLine(), out int passes))
             {
                 output.Printline(debug, $"Write it in numbers please!");
@@ -21,15 +24,28 @@ namespace Three_Cases
             }
             if (passes < 0)
             {
+                //if int is invalid it restarts.
                 output.Printline(debug, $"Are your team moving backwards?! Try again");
                 MatchStart(debug);
                 return;
             }
             HasScoredCheck(debug);
             GetResult getResult = new GetResult();
+            //gets result
             string result = getResult.Result(goals, passes);
+            //prints result.
             output.Printline(debug, result);
-            Console.ReadLine();
+            //clears console after some input.
+            Console.ReadLine(); Console.Clear();
+            output.Printline(debug, "Run new[R] CloseProgram[Any]");
+            //gets keypress.
+            output.KeyPress(out tast);
+            if(tast == ConsoleKey.R)
+            {
+                //goes back to choose program.
+                login.GetProgram();
+            }
+
         }
         public void HasScoredCheck(bool debug)
         {
@@ -37,14 +53,18 @@ namespace Three_Cases
             op.Printline(debug, $"Have your team Scored? [Yes] or [No]");
 
             goals = Console.ReadLine();
+            //converts input to lower.
             goals = goals.ToLower(); 
 
             switch (goals)
             {
+                //Checks if input is correct.
                 case "yes":
                 case "no":
+                    Console.Clear();
                     return;
                 default:
+                    //makes user try again if input is invalid.
                     Console.Clear();
                     output.Printline(debug, $"pleasewrite Yes or No.");
                     HasScoredCheck(debug);
@@ -66,10 +86,12 @@ namespace Three_Cases
         {
             if (goals.ToLower() == "yes")
             {
+                //cheers on goal
                 return CheerGoal(goals);
             }
             else
             {
+                //finds output.
                 return HappyWithPasses(passes);
             }
 
@@ -81,7 +103,7 @@ namespace Three_Cases
         }
 
         private string HappyWithPasses(int passes)
-        {
+        {   
             if (passes <= 0)
             {
                 return (noPasses);
@@ -94,6 +116,7 @@ namespace Three_Cases
             {
                 for (int i = 0; i < passes; i++)
                 {
+                    //for every pass adds to string.
                     couplePasses = couplePasses += "HUH!";
                 }
                 return (couplePasses);

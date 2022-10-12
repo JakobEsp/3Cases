@@ -120,6 +120,7 @@ namespace Three_Cases
             //Get's program from Key
             if (tasts == ConsoleKey.F)
             {
+                //Clears Console and starts program.
                 Console.Clear();
                 fodbold.MatchStart(debug);
             }
@@ -293,11 +294,13 @@ namespace Three_Cases
         {   
             //gets key.
             tasts = Console.ReadKey().Key;
+            Console.Clear();
         }
 
         
         public void Printline(bool debug, string print)
         {
+            //from passed in boll finds out what uotput method is used.
             if (debug)
             {
                 System.Diagnostics.Debug.WriteLine($"{print} ");
